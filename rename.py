@@ -9,10 +9,13 @@ async def rename_slash_command(inter):
     guild = inter.guild
 
     if can_rename(user,guild):
-        if can_be_renamed(target,guild):
-            await inter.response.send_modal(
-                RenamerModal(inter,  modal_callback=check_consent_before_rename)
-            )
+        if can_be_renamed(target,guild):            
+            if user == target:
+                await inter.response.send_message(MSG(ERROR_SELF_RENAME, renamer=user.mention))
+            else:
+                await inter.response.send_modal(
+                    RenamerModal(inter,  modal_callback=check_consent_before_rename)
+                )
         else:
             await inter.response.send_message(ERROR_NOT_RENAME_ME)
     else:
