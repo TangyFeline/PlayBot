@@ -23,6 +23,16 @@ SUCCESSFULLY_RENAMED = [
 ]
 # Example: @DonnaTheDom has given @SallyTheSub a new name.
 
+# A Renamer with Rename Me tried to rename themselves.
+# renamer: A mention of the person renaming
+ERROR_SELF_RENAME = [
+    "You cannot rename yourself, {renamer}. You goof. Feel humiliated. Shame.",
+    "Bad {renamer}, no renaming yourself, rawr.",
+    "{renamer}! No self-renaming. Shaaaaame.",
+    "For shame, {renamer}, you can't rename yourself."
+]
+# Example: You cannot rename yourself, @SammyTheSwitch. You goof. Feel humiliated. Shame.
+
 # DM to ask the user if they consent to a rename.
 # renamer: A mention of the person renaming
 RENAME_CONSENT_DM = ["{renamer} would like to rename you! Do you consent?"]
