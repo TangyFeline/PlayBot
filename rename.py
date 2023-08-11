@@ -1,0 +1,56 @@
+from constants import *
+from modals import RenamerModal
+from utils import hasRole, rename_user
+from views import ConsentView
+
+async def rename_slash_command(inter):
+    user = inter.user
+    target = inter.target
+    guild = inter.guild
+
+    if can_rename(user,guild):
+        if can_be_renamed(target,guild):
+            await inter.response.send_modal(
+                RenamerModal(inter,  modal_callback=check_consent_before_rename)
+            )
+        else:
+            await inter.response.send_message(ERROR_NOT_RENAME_ME)
+    else:
+         await inter.response.send_message(ERROR_NOT_RENAMER)
+        
+async def check_consent_before_rename(target, name, inter):
+    if consent_needed(target, inter.guild):
+        await target.send(
+            MSG(RENAME_CONSENT_DM,renamer=inter.user.mention),
+            view=ConsentView(do_rename_after_consent, RENAMING_CONSENT_ACCEPTED, 
+                             [inter.user, target, name, inter.channel])
+        )
+        await inter.response.send_message(
+            MSG(RENAMER_WAITING_CONSENT, target=target.mention),
+            ephemeral=True
+        )
+    else:
+        do_rename(target, name, inter)
+
+async def do_rename_after_consent(user, target, name, channel):
+    success = await rename_user(target, name)      
+    if success:
+        await channel.send(
+              MSG(SUCCESSFULLY_RENAMED, renamer=user.mention, target=target.mention)
+        )
+
+async def do_rename(target, name, inter):
+    success = await rename_user(target, name, inter)      
+    if success:
+        await inter.response.send_message(
+            MSG(SUCCESSFULLY_RENAMED, renamer=inter.user.mention, target=target.mention)
+        )
+
+def can_rename(user, guild):
+    return hasRole(user, RENAMER_ROLE, guild)
+
+def can_be_renamed(user, guild):
+    return hasRole(user, RENAME_ME_ROLE, guild) or hasRole(user, RENAME_ME_CONSENT_ROLE, guild)
+
+def consent_needed(user, guild):
+    return hasRole(user, RENAME_ME_CONSENT_ROLE, guild)
