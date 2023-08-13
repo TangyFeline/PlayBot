@@ -1,0 +1,23 @@
+swear_regexes = [	
+    "scuddlebutt",
+	r"b+a+s+t+a+r+d+",
+	r"\ba+ss+(?:hole)?\b",
+	r"\ba+ss+e+s\b",
+	r"\ba+r+s+e+s?(?:hole)?\b",
+	r"\bb+a+d+a+ss+",	
+	"b+i+t+c+h+",
+	"da+m+n+",
+	"f+u+c+k+",
+	r"^hell([^o]|\b)|[^s]h+el+l([^o]|\b)",
+	"s+h+i+t+",
+	"w+h+o+r+e",
+	"c+u+n+t+",
+	"p+i+s+s",
+	"wtf+",
+	"gdi+",
+	"lmfa+o+",
+	"fml+",
+	"s+l+u+t+",
+	r"([^slue]|\b)t+w+a+t+",
+	r"\bff+s+"
+]
