@@ -11,6 +11,9 @@ class ConsentView(disnake.ui.View):
 	async def a_button(
 		self, button: disnake.ui.Button, inter: disnake.MessageInteraction, 
 	):
-		print(inter)
-		await inter.response.send_message(self.responseAfterConsent)
+		if self.responseAfterConsent == "":
+			await inter.defer()
+		else:
+			await inter.response.send_message(self.responseAfterConsent)
+		
 		await self.callback(*self.args)
