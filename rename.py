@@ -2,6 +2,7 @@ from constants import *
 from modals import RenamerModal
 from utils import hasRole, rename_user
 from views import ConsentView
+from consent import get_consent_then_do
 
 async def rename_slash_command(inter):
     user = inter.user
@@ -23,17 +24,16 @@ async def rename_slash_command(inter):
         
 async def check_consent_before_rename(target, name, inter):
     if consent_needed(target, inter.guild):
-        await target.send(
-            MSG(RENAME_CONSENT_DM,renamer=inter.user.mention),
-            view=ConsentView(do_rename_after_consent, RENAMING_CONSENT_ACCEPTED, 
-                             [inter.user, target, name, inter.channel])
-        )
         await inter.response.send_message(
             MSG(RENAMER_WAITING_CONSENT, target=target.mention),
             ephemeral=True
         )
+        await get_consent_then_do(target, inter.user,
+                                MSG(RENAME_CONSENT_DM, renamer=inter.user.mention), RENAMING_CONSENT_ACCEPTED, 
+                                do_rename_after_consent, [inter.user, target, name, inter.channel]
+                            )
     else:
-        do_rename(target, name, inter)
+        await do_rename(target, name, inter)
 
 async def do_rename_after_consent(user, target, name, channel):
     success = await rename_user(target, name)      
