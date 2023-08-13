@@ -1,5 +1,6 @@
 from disnake import utils
 from disnake import errors
+import disnake
 from constants import *
 
 async def rename_user(user,new_name, inter=None):
@@ -16,3 +17,9 @@ async def rename_user(user,new_name, inter=None):
 def hasRole(user, role_name, guild):
 	role = utils.get(guild.roles, name=role_name)
 	return role in user.roles
+
+async def speak(text, interOrChannel, embed=None):
+    if isinstance(interOrChannel, disnake.Interaction):
+        await interOrChannel.response.send_message(text, embed=embed)
+    else:
+        await interOrChannel.send(text, embed=embed)
