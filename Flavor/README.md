@@ -1,5 +1,7 @@
 Use {person} to mention a person in the flavor text.
+
 Eg. {person} has great muzzling skills.
+
      @Carmine has great muzzling skills.
 
 Use {person.Pronoun} or {person.pronoun} to output the relevant pronoun.
