@@ -1,8 +1,10 @@
 Use **{person}** to mention a person in the flavor text.
+
 Eg. `{person} has great muzzling skills.`
 > **@Carmine** has great muzzling skills.
 
 Use **{person.Pronoun}** or **{person.pronoun}** to output the relevant pronoun.
+
 Eg. `{person.He} has a muzzle. {person.His} muzzle is tight. {person.He} put it on {person.himself}.`
 > **She** has a muzzle. **He**r muzzle is tight. **She** put on herself.
 
@@ -15,6 +17,7 @@ Eg. `{person} is a good sub. {person.Heis} handling {person.his} muzzle very wel
 
 Eg. `Watch out for {person}. {person.He} muzzle{person.s} lots of people.`
 > Watch out for **@Carmine**. **She** muzzle**s** lots of people.
+> 
 > Watch out for **@Ernest**. **They** muzzle lots of people.
 
 See `Pronouns/pronouns.py` for a complete list.
