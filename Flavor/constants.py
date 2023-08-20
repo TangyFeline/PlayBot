@@ -39,7 +39,7 @@ SAFEWORDS = [
 
 # =~=~=~=~=~=~=~==~ Static Messages =~=~=~=~=~=~=~=~=~ #
 # Error Messages
-ERROR_NOT_RENAMER = f"You do not have the {RENAMER_ROLE} role and cannot rename!" # Someone tried to rename with Renamer.
+ERROR_NOT_RENAMER = f"You do not have the {RENAMER_ROLE} role and cannot rename!" # Someone tried to rename without Renamer.
 ERROR_NOT_RENAME_ME = f"That person does not have the {RENAME_ME_ROLE} or {RENAME_ME_CONSENT_ROLE} roles and cannot be renamed." # A Renamer tried to rename someone without Rename Me.
 ERROR_CANT_MUZZLE = f"You do not have the {pretty_list(CAN_MUZZLE_ROLES)} role and cannot muzzle others." # Someone tried to muzzle someone without any muzzler roles or sub roles.
 ERROR_CANT_BE_MUZZLED = f"That person does not have the {MUZZLE_ME_ROLE} or {MUZZLE_CONSENT_ROLE} roles and cannot be muzzled."
