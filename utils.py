@@ -1,7 +1,5 @@
-from disnake import utils
-from disnake import errors
-import disnake
-from constants import *
+from Flavor.constants import *
+from disnake import utils, errors, Interaction
 
 async def rename_user(user,new_name, inter=None):
     try:        
@@ -15,11 +13,32 @@ async def rename_user(user,new_name, inter=None):
         return False
 
 def hasRole(user, role_name, guild):
-	role = utils.get(guild.roles, name=role_name)
+	role = utils.get(guild.roles, name=role_name)    
 	return role in user.roles
 
-async def speak(text, interOrChannel, embed=None):
-    if isinstance(interOrChannel, disnake.Interaction):
-        await interOrChannel.response.send_message(text, embed=embed)
+def hasRoles(user, role_arr, guild):
+    filtered_roles = [role for role in user.roles if role.name in role_arr]
+    return filtered_roles
+
+def hasAnyOfRoles(user, role_arr, guild):
+    return len(hasRoles(user, role_arr,guild)) > 0
+
+def getRole(user, role_name, guild):
+	role = utils.get(guild.roles, name=role_name)    
+	return role
+
+def getUserFromMention(user_mention, guild):
+    user_mention = user_mention.replace('<@!','')
+    user_mention = user_mention.replace('<@','')
+    user_id = int(user_mention.replace('>',''))
+    return guild.get_member(int(user_id))
+
+async def speak(text, interOrChannel, **kwargs):
+    if isinstance(interOrChannel, Interaction):
+        await interOrChannel.response.send_message(text, **kwargs)
     else:
-        await interOrChannel.send(text, embed=embed)
+        await interOrChannel.send(text, **kwargs)
+    
+def upperFirst(str):
+    return str[0].upper() + str[1:]
+
