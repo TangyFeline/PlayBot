@@ -41,7 +41,10 @@ SOAPY_APOLOGY_MAX_LENGTH = 2000
 SAFEWORDS = [
     ":red_safeword:",
     ":yellow_safeword:",
-    ":green_safeword:"
+    ":green_safeword:",
+    ":red_circle:",
+    ":yellow_circle:",
+    ":green_circle:"
 ]
 
 # =~=~=~=~=~=~=~==~ Static Messages =~=~=~=~=~=~=~=~=~ #
