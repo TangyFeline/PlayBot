@@ -18,7 +18,7 @@ RENAME_ME_CONSENT_ROLE = "Rename Me Maybe?" # Can be renamed, with a consent che
 
 # Muzzling
 MUZZLE_ME_ROLE = "Muzzle Me" # Can be muzzled
-MUZZLE_CONSENT_ROLE = "Muzzle Me Maybe" # Can be muzzled, with a consent check
+MUZZLE_CONSENT_ROLE = "Muzzle Me Maybe?" # Can be muzzled, with a consent check
 SUB_ROLE = "Active Sub" # Role that cannot muzzle, and is teased for trying.
 CAN_MUZZLE_ROLES = ["Active Dom", "Active Switch"] # Roles that can muzzle.
 CAN_RELEASE_ROLES = ["Active Dom", "Active Switch"] # Roles that can release from muzzles.
