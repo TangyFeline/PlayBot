@@ -179,7 +179,8 @@ class MuzzleDialogModal(Modal):
         self.modal_callback = modal_callback
         components = [
             TextInput(                
-                **text_input_kwargs
+                **text_input_kwargs,
+                value= '\n'.join(self.dialog.allowed_all)
             )   
         ]        
         super().__init__(components=components, *args, **kwargs)        

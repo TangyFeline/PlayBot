@@ -1,6 +1,5 @@
 MUZZLE_FLAVORS = {
     "muzzle":{
-        "defaults":["Woof", "Bark", "Arf"],
         "start":[
             "{muzzler} has muzzled {victim}."
         ],

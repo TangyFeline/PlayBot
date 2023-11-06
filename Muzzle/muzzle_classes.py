@@ -8,7 +8,7 @@ from disnake import Embed
 
 class MuzzleVictim(Pronouns):
     def __init__(self, me, 
-                 muzzle_type=None, muzzled_by=None, allowed_phrases=None, guild=None, reason_muzzled=""):
+                 muzzle_type=None, muzzled_by=None, allowed_phrases=None, guild=None, reason_muzzled="", struggle_allowed=False):
         self.muzzle_type = muzzle_type
         self.muzzled_by = muzzled_by
         self.allowed_phrases = sorted(allowed_phrases, key=len, reverse=True)
@@ -16,6 +16,7 @@ class MuzzleVictim(Pronouns):
         self.mention = me.mention
         self.last_struggled = 0
         self.reason_muzzled = reason_muzzled
+        self.struggle_allowed = struggle_allowed
 
         super().__init__(me, guild)
 
@@ -35,15 +36,18 @@ class MuzzleVictim(Pronouns):
         return False
 
     def allowed_to_say(self, sentence):
+        print('start',sentence)
         if self.found_safeword(sentence):
             return True
-                
+
         sentence = sentence.lower()
         punctuation_regex = r'[\’\'\.\!\?\,\(\)\-\s\>\<\~\\\^\:3]'
         sentence = re.sub(punctuation_regex,'',sentence)
     
         for allowed_phrase in self.allowed_phrases:
             sentence = sentence.replace(allowed_phrase,'')        
+
+        print('end',sentence)
 
         return len(sentence) == 0
 
@@ -52,7 +56,7 @@ class MuzzleVictim(Pronouns):
         await channel.send(text)
 
     async def muzzle_end(self, inter):
-        text = MSG(MUZZLE_FLAVORS[self.muzzle_type]["end"], muzzler=self.muzzled_by, victim=self)
+        text = MSG(MUZZLE_FLAVORS[self.muzzle_type]["end"], muzzler=Pronouns(inter.author, inter.guild), victim=self)
         await inter.response.send_message(text)
 
     async def escape(self, inter):

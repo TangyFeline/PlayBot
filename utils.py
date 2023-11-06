@@ -42,3 +42,10 @@ async def speak(text, interOrChannel, **kwargs):
 def upperFirst(str):
     return str[0].upper() + str[1:]
 
+async def getHook(channel):
+  hooks = await channel.webhooks()
+  if len(hooks) == 0:
+    webhook = await channel.create_webhook(name="PlayBot Webhook")
+  else:
+    webhook = hooks[0]
+  return webhook

@@ -23,6 +23,13 @@ SUB_ROLE = "Active Sub" # Role that cannot muzzle, and is teased for trying.
 CAN_MUZZLE_ROLES = ["Active Dom", "Active Switch"] # Roles that can muzzle.
 CAN_RELEASE_ROLES = ["Active Dom", "Active Switch"] # Roles that can release from muzzles.
 
+# Transforming
+TRANSFORM_ME_ROLE = "Transform Me" # Can be transformed
+TRANSFORM_CONSENT_ROLE = "Transform Me Maybe" # Can be transformed, with a consent check
+TRANSFORM_SUB_ROLE = "Active Sub" # Role that cannot transform, and is teased for trying.
+CAN_TRANSFORM_ROLES = ["Active Dom", "Active Switch"] # Roles that can transform.
+CAN_RELEASE_TRANSFORM_ROLES = ["Active Dom", "Active Switch"] # Roles that can release from transforms.
+
 # Swearing
 SOAP_ROLE = "Soapy" # People with this role will be scolded if swearing is detected.
 
@@ -41,13 +48,21 @@ SAFEWORDS = [
 # Error Messages
 ERROR_NOT_RENAMER = f"You do not have the {RENAMER_ROLE} role and cannot rename!" # Someone tried to rename without Renamer.
 ERROR_NOT_RENAME_ME = f"That person does not have the {RENAME_ME_ROLE} or {RENAME_ME_CONSENT_ROLE} roles and cannot be renamed." # A Renamer tried to rename someone without Rename Me.
+
 ERROR_CANT_MUZZLE = f"You do not have the {pretty_list(CAN_MUZZLE_ROLES)} role and cannot muzzle others." # Someone tried to muzzle someone without any muzzler roles or sub roles.
 ERROR_CANT_BE_MUZZLED = f"That person does not have the {MUZZLE_ME_ROLE} or {MUZZLE_CONSENT_ROLE} roles and cannot be muzzled."
-ERROR_NOT_MUZZLING = f"You are not muzzling anyone." # Someone tried to /release without having anyone muzzled. Ephemeral.
-ERROR_NOT_MUZZLING_TARGET = "That person does not seem to be muzzled." # Someone tried to /release @target and their target that was not in a muzzle. Ephemeral.
 ERROR_CANT_RELEASE = f"You do not have the {pretty_list(CAN_RELEASE_ROLES)} role and cannot release from a muzzle."
 ERROR_CANNOT_RELEASE_SELF = "You can't release yourself from a muzzle." # Someone tried to /release themselves.
 ERROR_STRUGGLE_NOT_MUZZLED = "Struggle against what? You aren't muzzled!" # Someone tried to /struggle without being in a muzzle. Ephemeral.
+ERROR_STRUGGLE_NOT_ALLOWED = "You can't struggle out of this muzzle." # Someone tried to /struggle but struggling was disabled for this muzzle.
+
+ERROR_CANT_TRANSFORM = f"You do not have the {pretty_list(CAN_TRANSFORM_ROLES)} role and cannot transform others." # Someone tried to transform someone without any roles or sub roles.
+ERROR_CANT_BE_TRANSFORMED = f"That person does not have the {TRANSFORM_ME_ROLE} or {TRANSFORM_CONSENT_ROLE} roles and cannot be transformed."
+ERROR_CANT_RELEASE_TRANSFORM = f"You do not have the {pretty_list(CAN_RELEASE_TRANSFORM_ROLES)} role and cannot release someone from a transformation."
+ERROR_CANNOT_RELEASE_SELF_TRANSFORM = "You can't release yourself from a transformation." # Someone tried to /release themselves while transformed.
+
+ERROR_NOT_RESTRICTING = "You are not restricting anyone." # Someone tried to /release without having anyone muzzled/transformed. Ephemeral.
+ERROR_NOT_RESTRICTING_TARGET = "That person does not seem to be restricted." # Someone tried to /release @target and their target that was not in a muzzle or transformation. Ephemeral.
 
 # =~=~=~=~=~=~=~= Variable Messages =~=~=~=~=~=~=~=~=~ #
 # Feedback to a Muzzler after choosing to muzzle a Muzzle Me Maybe user.
@@ -59,12 +74,14 @@ MUZZLER_WAITING_CONSENT = ["You have sent a request to muzzle {victim}."]
 # muzzler: A mention of the person trying to muzzle
 # channel: The id of the channel that the request was sent from.
 MUZZLE_CONSENT_DM = ["{muzzler} is trying to muzzle you in <#{channel}>!\n\nDo you consent?"]
+TRANSFORM_CONSENT_DM = ["{muzzler} is trying to transform you in <#{channel}>!\n\nDo you consent?"]
 # Example: @DonnaTheDom is trying to muzzle you in [PlayRoom->#blush-chat]! Do you consent?
 
 # Feedback to a user consenting to being muzzled.
 # muzzler: A mention of the person trying to muzzle
 # channel: The id of the channel that the request was sent from.
 MUZZLING_CONSENT_ACCEPTED = ["You're muzzled now! Head to <#{channel}> and tell {muzzler} how you feel about it."] # DM - User consented to muzzling.
+TRANSFORM_CONSENT_ACCEPTED = ["You're transformed now! Head to <#{channel}> and tell {muzzler} how you feel about it."] # DM - User consented to transforming.
 
 ERROR_CANT_STRUGGLE_YET = "You can't struggle yet." # Someone tried to struggle, but has struggled recently. Ephemeral.
 
