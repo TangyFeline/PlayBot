@@ -42,9 +42,9 @@ SAFEWORDS = [
     ":red_safeword:",
     ":yellow_safeword:",
     ":green_safeword:",
-    ":red_circle:",
-    ":yellow_circle:",
-    ":green_circle:"
+    "🔴",
+    "🟡",
+    "🟢"
 ]
 
 # =~=~=~=~=~=~=~==~ Static Messages =~=~=~=~=~=~=~=~=~ #
