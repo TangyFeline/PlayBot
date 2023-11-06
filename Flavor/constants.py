@@ -14,7 +14,7 @@ IT_ITS_ROLE = "It/Its" # Can be referred to as it/its
 # Renaming
 RENAMER_ROLE = "Renamer" # Can rename others
 RENAME_ME_ROLE = "Rename Me" # Can be renamed
-RENAME_ME_CONSENT_ROLE = "Rename Me Maybe" # Can be renamed, with a consent check
+RENAME_ME_CONSENT_ROLE = "Rename Me Maybe?" # Can be renamed, with a consent check
 
 # Muzzling
 MUZZLE_ME_ROLE = "Muzzle Me" # Can be muzzled
