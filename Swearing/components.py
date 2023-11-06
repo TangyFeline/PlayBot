@@ -1,11 +1,11 @@
 from Flavor.constants import *
 from disnake import Embed
 from disnake.ui import View, Button, Modal, TextInput
-import disnake.ui as ui
+from disnake import ButtonStyle, TextInputStyle, Colour
 
 class SoapEmbed(Embed):
     def __init__(self, user, **kwargs):
-        super().__init__(color=ui.Colour.lighter_grey(),**kwargs)
+        super().__init__(color=Colour.lighter_grey(), **kwargs)
         self.set_thumbnail(user.display_avatar)
 
 class SoapView(View):
@@ -21,7 +21,7 @@ class SoapView(View):
 class ApologyButton(Button):
     def __init__(self, parent):
         self.parent = parent
-        super().__init__(label="I'm sorry!", emoji="🥺", style=ui.ButtonStyle.primary, custom_id="apology")
+        super().__init__(label="I'm sorry!", emoji="🥺", style=ButtonStyle.primary, custom_id="apology")
 
     async def callback(self, inter):
         await inter.response.send_modal(ApologyModal(self.parent, inter.message.author.display_name, inter.user.display_name))
@@ -35,7 +35,7 @@ class ApologyModal(Modal):
                 min_length=SOAPY_APOLOGY_MIN_LENGTH,
                 max_length=SOAPY_APOLOGY_MAX_LENGTH,
                 label="Write your apology.",
-                style=ui.TextInputStyle.paragraph,
+                style=TextInputStyle.paragraph,
                 placeholder=MSG(APOLOGY_MODAL_PLACEHOLDER, bot_name=bot_name, sub_name=name)
             )   
         ]

@@ -3,6 +3,7 @@ from Rename.rename import rename_slash_command
 from Muzzle.muzzle import muzzle_slash_command, check_muzzled_victims, muzzle_release_slash_command, struggle_slash_command, mention_is_muzzled, mention_is_muzzling
 from Transform.transform import transform_slash_command, transform_release_slash_command, check_transform_victims, TransformTypes, mention_is_transformed, mention_is_transforming, check_for_emoji_actions
 from Introduction.introduction import introduction_slash_command
+from Swearing.swearing import check_soapies
 from utils import getUserFromMention
 from Flavor.constants import *
 
@@ -75,6 +76,7 @@ async def on_message(message):
           return
      await check_muzzled_victims(message)
      await check_transform_victims(message)
+     await check_soapies(message)
      
      if str(message.author) == 'DISBOARD#2760':
          if len(message.embeds) == 1:

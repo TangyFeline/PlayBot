@@ -36,3 +36,7 @@ def contains_swears(text):
         if not re.search(swear_regex, text) == None:
             return True
     return False
+
+async def check_soapies(message):
+    if is_soapy(message.author, message.guild):
+        await swear_check(message)
