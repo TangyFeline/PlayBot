@@ -1,5 +1,5 @@
 from Flavor.constants import *
-from disnake import utils, errors, Interaction
+from disnake import utils, errors, Interaction, threads
 
 async def rename_user(user,new_name, inter=None):
     try:        
@@ -43,7 +43,9 @@ def upperFirst(str):
     return str[0].upper() + str[1:]
 
 async def getHook(channel):
-  hooks = await channel.webhooks()
+  if type(channel) == threads.Thread:
+    channel = channel.parent
+  hooks = await channel.webhooks()  
   if len(hooks) == 0:
     webhook = await channel.create_webhook(name="PlayBot Webhook")
   else:
@@ -51,5 +53,6 @@ async def getHook(channel):
   return webhook
 
 def isPlayChannel(channel):
-    print(channel.name)
+    if type(channel) == threads.Thread:
+        channel = channel.parent
     return channel.name in PLAY_CHANNELS

@@ -102,12 +102,12 @@ async def rename(inter,
 async def on_message(message):
      if message.author == bot.user:
           return
-     
+
      if isPlayChannel(message.channel):
           await check_muzzled_victims(message)
           await check_transform_victims(message)
           await check_soapies(message)
-     
+
      if str(message.author) == 'DISBOARD#2760':
          if len(message.embeds) == 1:
               if 'Bump done!' in message.embeds[0].description:	                    

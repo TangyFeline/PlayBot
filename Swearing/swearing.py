@@ -8,7 +8,8 @@ from emojis import soap_emoji, bubble_emoji
 import re
 
 def is_soapy(user, guild):
-    return hasRole(user, SOAP_ROLE, guild)
+    if not user.discriminator == "0000":
+        return hasRole(user, SOAP_ROLE, guild)
 
 async def swear_check(message):
     text = message.content
