@@ -1,5 +1,6 @@
 from Flavor.constants import *
 from disnake import utils, errors, Interaction, threads
+from discord_webhook import DiscordWebhook
 
 async def rename_user(user,new_name, inter=None):
     try:        
@@ -43,16 +44,35 @@ def upperFirst(str):
     return str[0].upper() + str[1:]
 
 async def getHook(channel):
-  if type(channel) == threads.Thread:
-    channel = channel.parent
-  hooks = await channel.webhooks()  
-  if len(hooks) == 0:
-    webhook = await channel.create_webhook(name="PlayBot Webhook")
-  else:
-    webhook = hooks[0]
-  return webhook
+    isThread = type(channel) == threads.Thread
+    if isThread:    
+        thread_id = channel.id
+        channel = channel.parent
+
+    hooks = await channel.webhooks()
+
+    if len(hooks) == 0:
+        webhook = await channel.create_webhook(name="PlayBot Webhook")
+    else:
+        webhook = hooks[0]
+
+    print(webhook.url)
+
+    if isThread:
+        webhook = ThreadWebhook(webhook.url, thread_id)
+
+    return webhook
 
 def isPlayChannel(channel):
     if type(channel) == threads.Thread:
         channel = channel.parent
     return channel.name in PLAY_CHANNELS
+
+class ThreadWebhook:
+    def __init__(self, url, thread_id):
+        self.url = url
+        self.thread_id = thread_id
+    
+    async def send(self, text, **kwargs):        
+        hook = DiscordWebhook(url=self.url, thread_id=self.thread_id, content=text, **kwargs)
+        hook.execute()
