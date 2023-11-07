@@ -57,6 +57,7 @@ PLAY_CHANNELS = [
     "✯-rough-room-2",
     "✯-rough-room-3",
     "✯-rough-room-4",
+    "🔧-testing-room"
 ]
 
 # =~=~=~=~=~=~=~==~ Static Messages =~=~=~=~=~=~=~=~=~ #
