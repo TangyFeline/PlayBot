@@ -6,7 +6,7 @@ from Introduction.introduction import introduction_slash_command
 from Swearing.swearing import check_soapies
 from utils import getUserFromMention
 from Flavor.constants import *
-import keepalive
+import mykeepalive
 
 import disnake
 from disnake.ext import commands
@@ -94,3 +94,4 @@ async def on_reaction_add(reaction, user):
         await check_for_emoji_actions(reaction.emoji, reaction.message.author, reaction.message.channel)
 
 bot.run(TOKEN)
+
