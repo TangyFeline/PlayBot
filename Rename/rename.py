@@ -3,10 +3,17 @@ from Rename.components import RenamerModal
 from Consent.consent import get_consent_then_do
 from utils import hasRole, rename_user
 
-async def rename_slash_command(inter):
-    user = inter.user
+async def rename_slash_command(inter, target):
+    await start_rename(inter, target)
+
+async def rename_app_command(inter):    
     target = inter.target
+    await start_rename(inter, target)
+
+async def start_rename(inter, target):
     guild = inter.guild
+    user = inter.user
+    print(user)
 
     if can_rename(user,guild):
         if can_be_renamed(target,guild):            
@@ -14,13 +21,13 @@ async def rename_slash_command(inter):
                 await inter.response.send_message(MSG(ERROR_SELF_RENAME, renamer=user.mention))
             else:
                 await inter.response.send_modal(
-                    RenamerModal(inter,  modal_callback=check_consent_before_rename)
+                    RenamerModal(inter, target, modal_callback=check_consent_before_rename)
                 )
         else:
             await inter.response.send_message(ERROR_NOT_RENAME_ME)
     else:
          await inter.response.send_message(ERROR_NOT_RENAMER)
-        
+
 async def check_consent_before_rename(target, name, inter):
     if consent_needed(target, inter.guild):
         await inter.response.send_message(

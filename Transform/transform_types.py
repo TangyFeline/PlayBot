@@ -16,6 +16,9 @@ class Transformation:
         return f"""
         You are preparing to {self.verb} {target}.
         """
+    
+    def after_transform(self):        
+        return ""
 
 class TransformationButton:
     def __init__(self, title=None, button_label=None, toVar=None, **kwargs):
@@ -92,12 +95,12 @@ class PlushTransformation(Transformation):
                         \n{self.button_values.get('set_phrases')}"""
             
         if self.button_values.get('cheerful'):
-            text += f"\n𝅘𝅥𝅮 {target.He} will be a cheerful little plushy~ 𝅘𝅥𝅮"
+            text += f"\n♫ {target.He} will be a cheerful little plushy~ ♫"
         return text
     
     def replace_text(self, s):
         if self.button_values.get('cheerful'):
-            s = f"𝅘𝅥𝅮 {s}\~ 𝅘𝅥𝅮"
+            s = f"♫ {s}\~ ♫"
         return s
     
     def after_transform(self):        

@@ -2,8 +2,8 @@ from disnake.ui import Modal, TextInput
 from disnake import TextInputStyle
 
 class RenamerModal(Modal):
-    def __init__(self, inter, modal_callback=None):
-        self.target = inter.target
+    def __init__(self, inter, target, modal_callback=None):
+        self.target = target
         self.channel = inter.channel
         self.modal_callback = modal_callback        
 

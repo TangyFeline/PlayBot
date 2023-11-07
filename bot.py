@@ -1,5 +1,5 @@
 from Bump.bump import send_bump_message
-from Rename.rename import rename_slash_command
+from Rename.rename import rename_slash_command, rename_app_command
 from Muzzle.muzzle import muzzle_slash_command, check_muzzled_victims, muzzle_release_slash_command, struggle_slash_command, mention_is_muzzled, mention_is_muzzling
 from Transform.transform import transform_slash_command, transform_release_slash_command, check_transform_victims, TransformTypes, mention_is_transformed, mention_is_transforming, check_for_emoji_actions
 from Introduction.introduction import introduction_slash_command
@@ -8,7 +8,6 @@ from utils import getUserFromMention
 from Flavor.constants import *
 from disnake.ext import tasks
 from disnake import Game
-import mykeepalive
 from itertools import cycle
 
 import disnake
@@ -32,7 +31,7 @@ async def on_ready():
 
 @bot.user_command(description="Rename this user.")
 async def Rename(inter):
-    await rename_slash_command(inter)
+    await rename_app_command(inter)
 
 @bot.user_command(description="View this user's introduction.")
 async def Introduction(inter):
@@ -74,6 +73,12 @@ async def transform(inter,
         target:disnake.User = commands.Param(description="Who are you targetting with this transformation?")
 	):
         await transform_slash_command(inter, target, transform_type)
+
+@bot.slash_command(description="Rename a user.")
+async def rename(inter,
+      target:disnake.User = commands.Param(description="Who do you want to rename?", default="")
+     ):
+     await rename_slash_command(inter, target)
 
 @bot.event
 async def on_message(message):
