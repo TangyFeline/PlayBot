@@ -6,7 +6,10 @@ from Introduction.introduction import introduction_slash_command
 from Swearing.swearing import check_soapies
 from utils import getUserFromMention
 from Flavor.constants import *
+from disnake.ext import tasks
+from disnake import Game
 import mykeepalive
+from itertools import cycle
 
 import disnake
 from disnake.ext import commands
@@ -24,6 +27,7 @@ bot = commands.InteractionBot(intents=intents)
 
 @bot.event
 async def on_ready():
+    change_status.start()
     print("Started!")
 
 @bot.user_command(description="Rename this user.")
@@ -92,6 +96,12 @@ async def on_reaction_add(reaction, user):
         print(reaction.message)
         print(reaction.message.author)
         await check_for_emoji_actions(reaction.emoji, reaction.message.author, reaction.message.channel)
+
+now_playing = cycle(NOW_PLAYING)
+
+@tasks.loop(seconds=10)
+async def change_status():
+  await bot.change_presence(activity=Game(next(now_playing)))
 
 bot.run(TOKEN)
 

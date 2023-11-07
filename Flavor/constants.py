@@ -68,6 +68,8 @@ ERROR_CANNOT_RELEASE_SELF_TRANSFORM = "You can't release yourself from a transfo
 ERROR_NOT_RESTRICTING = "You are not restricting anyone." # Someone tried to /release without having anyone muzzled/transformed. Ephemeral.
 ERROR_NOT_RESTRICTING_TARGET = "That person does not seem to be restricted." # Someone tried to /release @target and their target that was not in a muzzle or transformation. Ephemeral.
 
+NOW_PLAYING = ["with subbies", "with your heart"] # Displays "playing [item]" under the bot's name. Cycles in order every 10 seconds.
+
 # =~=~=~=~=~=~=~= Variable Messages =~=~=~=~=~=~=~=~=~ #
 # Feedback to a Muzzler after choosing to muzzle a Muzzle Me Maybe user.
 # victim: A mention of the person being muzzled
