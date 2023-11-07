@@ -6,6 +6,7 @@ from Introduction.introduction import introduction_slash_command
 from Swearing.swearing import check_soapies
 from utils import getUserFromMention
 from Flavor.constants import *
+import keepalive
 
 import disnake
 from disnake.ext import commands
