@@ -26,8 +26,10 @@ def get_transformation_from_string(string):
     transform_class = TRANSFORM_FLAVORS[string]['classtouse']
     return transform_class(*TRANSFORM_FLAVORS[string]['args'])
 
-async def transform_release_slash_command(inter, target):        
-    if can_use_release(inter.user, inter.guild):
+async def transform_release_slash_command(inter, target):
+    if inter.user.mention == target.mention:
+        await inter.response.send_message(ERROR_TRANSFORM_SELF_RELEASE)
+    elif can_use_release(inter.user, inter.guild):
         if target == "":
             if inter.user.mention in transformers:
                 transformer = transformers[inter.user.mention]

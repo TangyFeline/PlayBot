@@ -29,6 +29,7 @@ TRANSFORM_CONSENT_ROLE = "Transform Me Maybe" # Can be transformed, with a conse
 TRANSFORM_SUB_ROLE = "Active Sub" # Role that cannot transform, and is teased for trying.
 CAN_TRANSFORM_ROLES = ["Active Dom", "Active Switch"] # Roles that can transform.
 CAN_RELEASE_TRANSFORM_ROLES = ["Active Dom", "Active Switch"] # Roles that can release from transforms.
+ERROR_TRANSFORM_SELF_RELEASE = ["You can't revert your own transformation. Ask someone else!"]
 
 # Swearing
 SOAP_ROLE = "Soapy" # People with this role will be scolded if swearing is detected.
