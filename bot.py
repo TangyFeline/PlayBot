@@ -4,7 +4,7 @@ from Muzzle.muzzle import muzzle_slash_command, check_muzzled_victims, muzzle_re
 from Transform.transform import transform_slash_command, transform_release_slash_command, check_transform_victims, TransformTypes, mention_is_transformed, mention_is_transforming, check_for_emoji_actions
 from Introduction.introduction import introduction_slash_command
 from Swearing.swearing import check_soapies
-from utils import getUserFromMention
+from utils import getUserFromMention, isPlayChannel
 from Flavor.constants import *
 from disnake.ext import tasks
 from disnake import Game
@@ -31,7 +31,10 @@ async def on_ready():
 
 @bot.user_command(description="Rename this user.")
 async def Rename(inter):
-    await rename_app_command(inter)
+    if isPlayChannel(inter.channel):
+        await rename_app_command(inter)
+    else:
+        await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)    
 
 @bot.user_command(description="View this user's introduction.")
 async def Introduction(inter):
@@ -44,49 +47,66 @@ async def muzzle(inter,
         muzzle_type: str = commands.Param(choices=MuzzleTypes, description="Which muzzle type do you want to use?"),
         target:disnake.User = commands.Param(description="Who are you targetting with this muzzle?")
 	):        
+     if isPlayChannel(inter.channel):
         await muzzle_slash_command(inter, target, muzzle_type)
+     else:
+          await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)
 
 @bot.slash_command(description="Release a user.")
 async def release(inter,
      target:disnake.User = commands.Param(description="Who do you want to release? Leave blank to release the last person you restricted.", default=""),
 ):
-     if target == "":
-          if mention_is_transforming(inter.user.mention):
-               await transform_release_slash_command(inter, target)
-          elif mention_is_muzzling(inter.user.mention):
-               await muzzle_release_slash_command(inter,target)
+     if isPlayChannel(inter.channel):
+          if target == "":
+               if mention_is_transforming(inter.user.mention):
+                    await transform_release_slash_command(inter, target)
+               elif mention_is_muzzling(inter.user.mention):
+                    await muzzle_release_slash_command(inter,target)
+               else:
+                    await inter.response.send_message(ERROR_NOT_RESTRICTING, ephemeral=True)
           else:
-               await inter.response.send_message(ERROR_NOT_RESTRICTING, ephemeral=True)
+               if mention_is_transformed(target.mention):          
+                    await transform_release_slash_command(inter, target)
+               else:
+                    await muzzle_release_slash_command(inter,target)
      else:
-          if mention_is_transformed(target.mention):          
-               await transform_release_slash_command(inter, target)
-          else:
-               await muzzle_release_slash_command(inter,target)
+          await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)
 
 @bot.slash_command(description="Struggle against a muzzle, if you are in one.")
 async def struggle(inter):
-     await struggle_slash_command(inter)
+     if isPlayChannel(inter.channel):
+          await struggle_slash_command(inter)
+     else:
+          await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)
 
 @bot.slash_command(description="Transform a user.")
 async def transform(inter, 
         transform_type: str = commands.Param(choices=TransformTypes, description="Which type of transformation do you want to use?"),
         target:disnake.User = commands.Param(description="Who are you targetting with this transformation?")
 	):
+     if isPlayChannel(inter.channel):
         await transform_slash_command(inter, target, transform_type)
+     else:
+          await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)
 
 @bot.slash_command(description="Rename a user.")
 async def rename(inter,
       target:disnake.User = commands.Param(description="Who do you want to rename?", default="")
      ):
-     await rename_slash_command(inter, target)
+     if isPlayChannel(inter.channel):
+          await rename_slash_command(inter, target)
+     else:
+          await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)
 
 @bot.event
 async def on_message(message):
      if message.author == bot.user:
           return
-     await check_muzzled_victims(message)
-     await check_transform_victims(message)
-     await check_soapies(message)
+     
+     if isPlayChannel(message.channel):
+          await check_muzzled_victims(message)
+          await check_transform_victims(message)
+          await check_soapies(message)
      
      if str(message.author) == 'DISBOARD#2760':
          if len(message.embeds) == 1:
@@ -97,9 +117,7 @@ async def on_message(message):
 
 @bot.event
 async def on_reaction_add(reaction, user):
-    if user.id != bot.user.id:
-        print(reaction.message)
-        print(reaction.message.author)
+    if user.id != bot.user.id and isPlayChannel(reaction.message.channel):
         await check_for_emoji_actions(reaction.emoji, reaction.message.author, reaction.message.channel)
 
 now_playing = cycle(NOW_PLAYING)

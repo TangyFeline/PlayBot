@@ -47,6 +47,17 @@ SAFEWORDS = [
     "🟡",
     "🟢"
 ]
+# All bot features only work in these channels.
+PLAY_CHANNELS = [
+    "✯-playroom-1",
+    "✯-playroom-2",
+    "✯-playroom-3",
+    "✯-playroom-4",
+    "✯-rough-room-1",
+    "✯-rough-room-2",
+    "✯-rough-room-3",
+    "✯-rough-room-4",
+]
 
 # =~=~=~=~=~=~=~==~ Static Messages =~=~=~=~=~=~=~=~=~ #
 # Error Messages
@@ -69,6 +80,7 @@ ERROR_NOT_RESTRICTING = "You are not restricting anyone." # Someone tried to /re
 ERROR_NOT_RESTRICTING_TARGET = "That person does not seem to be restricted." # Someone tried to /release @target and their target that was not in a muzzle or transformation. Ephemeral.
 
 NOW_PLAYING = ["with subbies", "with your heart"] # Displays "playing [item]" under the bot's name. Cycles in order every 10 seconds.
+ERROR_NOT_PLAY_CHANNEL = "Please move to a play channel to use this feature!"
 
 # =~=~=~=~=~=~=~= Variable Messages =~=~=~=~=~=~=~=~=~ #
 # Feedback to a Muzzler after choosing to muzzle a Muzzle Me Maybe user.

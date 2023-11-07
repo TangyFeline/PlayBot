@@ -49,3 +49,7 @@ async def getHook(channel):
   else:
     webhook = hooks[0]
   return webhook
+
+def isPlayChannel(channel):
+    print(channel.name)
+    return channel.name in PLAY_CHANNELS
