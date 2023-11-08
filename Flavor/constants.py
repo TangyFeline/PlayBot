@@ -49,11 +49,11 @@ SAFEWORDS = [
 ]
 # All bot features only work in these channels.
 PLAY_CHANNELS = [
-    "✯-playroom-1",
+    "✯-playroom",
     "✯-playroom-2",
     "✯-playroom-3",
     "✯-playroom-4",
-    "✯-rough-room-1",
+    "✯-rough-room",
     "✯-rough-room-2",
     "✯-rough-room-3",
     "✯-rough-room-4",

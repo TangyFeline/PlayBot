@@ -35,20 +35,17 @@ class MuzzleVictim(Pronouns):
                 return True            
         return False
 
-    def allowed_to_say(self, sentence):
-        print('start',sentence)
+    def allowed_to_say(self, sentence):        
         if self.found_safeword(sentence):
             return True
-
+        
         sentence = sentence.lower()
+
+        for allowed_phrase in self.allowed_phrases:
+            sentence = sentence.replace(allowed_phrase.lower(),'')        
+
         punctuation_regex = r'[\’\'\.\!\?\,\(\)\-\s\>\<\~\\\^\:3]'
         sentence = re.sub(punctuation_regex,'',sentence)
-    
-        for allowed_phrase in self.allowed_phrases:
-            sentence = sentence.replace(allowed_phrase,'')        
-
-        print('end',sentence)
-
         return len(sentence) == 0
 
     async def scold(self, channel):

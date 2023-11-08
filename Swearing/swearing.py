@@ -32,8 +32,8 @@ async def swear_scold(message):
     await soap_emoji(message)
     await bubble_emoji(message)
 
-def contains_swears(text):
-    for swear_regex in swear_regexes:
+def contains_swears(text):        
+    for swear_regex in swear_regexes:        
         if not re.search(swear_regex, text) == None:
             return True
     return False
