@@ -28,5 +28,19 @@ TRANSFORM_FLAVORS = {
 
         "classtouse": PlushTransformation,
         "args":['plushify']
+    },
+    "pettify":{
+        "start":[
+            "{transformer} has pettified {victim}."
+        ],        
+        "end":[
+            "{transformer} has reverted {victim}."
+        ],
+        "subtry":[
+            "{transformer} is a sub and cannot transform others."
+        ],
+
+        "classtouse": PetTransformation,
+        "args":['pettify']
     }
 }

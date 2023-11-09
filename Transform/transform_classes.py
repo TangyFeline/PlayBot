@@ -3,6 +3,7 @@ from Flavor.transform_flavor import *
 from constants_helper import MSG
 from utils import getHook, speak
 from random import choice
+from Swearing.swearing import contains_swears, is_soapy
 
 class TransformVictim(Pronouns):
     def __init__(self, me, name=None,
@@ -11,6 +12,7 @@ class TransformVictim(Pronouns):
         self.transformed_by = transformed_by
         self.me = me
         self.mention = me.mention       
+        self.guild = guild
 
         if name:
             self.name = name
@@ -21,8 +23,11 @@ class TransformVictim(Pronouns):
 
     async def say(self, text, channel):
         hook = await getHook(channel)
-        text = self.transform_type.replace_text(text)
-        await hook.send(text, username=f"{self.name}", avatar_url=self.me.display_avatar.url)
+        if self.transform_type.is_allowed(text):
+            text = self.transform_type.replace_text(text)
+            if is_soapy(self.me, self.guild) and contains_swears(text):                
+                text = self.transform_type.swear_replace(text)
+            await hook.send(text, username=f"{self.name}", avatar_url=self.me.display_avatar.url)
 
     async def transform_start(self, interOrChannel):        
         text = MSG(TRANSFORM_FLAVORS[self.transform_type.verb]["start"], 

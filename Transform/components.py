@@ -49,13 +49,13 @@ class TransformDialog():
         self.embed.update()
         await inter.response.edit_message(embed=self.embed,view=self.view)
 
-    async def send(self, interOrChannel):        
+    async def send(self, interOrChannel):    
         await speak("",
                     interOrChannel,
                     embed = self.embed,
                     view = self.view, ephemeral=True)
         
-    async def confirm(self, inter):        
+    async def confirm(self, inter):
         await self.callback(inter, inter.user, self.transform_type, self.target, options={
             'name':self.new_name,
             'transform_type':self.transform_type        
@@ -72,8 +72,12 @@ class TransformEmbed(Embed):
     def update(self):
         if self.dialog.page == "start":
             self.description = self.dialog.transform_type.text(self.dialog.target_pronouns, self.dialog.new_name)
-        else:
+        elif self.dialog.page == 'pickCensor':
             self.description = EXPLAIN_CENSOR_METHODS
+        elif self.dialog.page == "pickOptions":
+            self.description = self.dialog.optionsText
+        else:
+            self.description = "Something went wrong!"
 
     def setup_embed(self):
         self.clear_fields()
@@ -142,13 +146,16 @@ class TransformView(View):
                     ))
                 elif type(button).__name__ == "TransformationPickCensorMethodButton":
                     self.add_item(TransformPickCensorMethodButton(self.dialog, row=0, label="Censor Method"))
+                elif type(button).__name__ == "TransformationPickButton":
+                    if button.toShow():                    
+                        self.add_item(TransformPickButton(self.dialog, button.explainText, button.options, toVar=button.toVar, row=0, label=button.button_label))                    
                 else:
                     self.add_item(TransformDialogModalButton(self.dialog,
                         button.title,
                         self.dialog.transform_type.button_values.get(button.toVar),
                         modal_callback=button.callback,
                         row=1,
-                        text_input_kwargs={                    
+                        text_input_kwargs={
                             'custom_id':'words-list',
                             **button.kwargs
                         },
@@ -161,6 +168,15 @@ class TransformView(View):
                 self.add_item(TransformCensorOptionButton(
                     self.dialog, 
                     label=f"{type_name}")
+                )
+        elif self.dialog.page == "pickOptions":
+            for option in self.dialog.options:                
+                print(option)
+                self.add_item(TransformOptionButton(
+                    self.dialog,
+                    option['value'],
+                    self.dialog.selectVar,
+                    label=option['label']),                    
                 )
 
 class TransformDialogModalButton(Button):
@@ -237,6 +253,18 @@ class TransformCensorOptionButton(Button):
         self.dialog.transform_type.censor_type = CensorTypes[self.label]
         await self.dialog.update(inter)
 
+class TransformOptionButton(Button):
+    def __init__(self, dialog, value, toVar, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.dialog = dialog        
+        self.value = value
+        self.toVar = toVar
+    
+    async def callback(self, inter):
+        self.dialog.page = "start"
+        self.dialog.transform_type.button_values[self.toVar] = self.value
+        await self.dialog.update(inter)
+
 class TransformPickCensorMethodButton(Button):
     def __init__(self, dialog, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -244,6 +272,21 @@ class TransformPickCensorMethodButton(Button):
     
     async def callback(self, inter):
         self.dialog.page = "pickCensor"
+        await self.dialog.update(inter)
+
+class TransformPickButton(Button):
+    def __init__(self, dialog, explainText, options, toVar, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.dialog = dialog
+        self.options = options
+        self.explainText = explainText
+        self.toVar = toVar
+    
+    async def callback(self, inter):
+        self.dialog.page = "pickOptions"        
+        self.dialog.options = self.options
+        self.dialog.optionsText = self.explainText
+        self.dialog.selectVar = self.toVar
         await self.dialog.update(inter)
 
 class TransformDialogConfirmButton(Button):

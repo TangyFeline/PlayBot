@@ -13,6 +13,7 @@ class ErrorCensorType(CensorType):
         pass
     
     def replace(self, text):
+        print(text)
         ERRORS = [
             "ERROR",
             "NOT FOUND",

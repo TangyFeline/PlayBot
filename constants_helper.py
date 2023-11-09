@@ -10,8 +10,14 @@ def MSG(text_to_format, **kwargs):
         text_to_format = choice(text_to_format)
     return text_to_format.format(**kwargs)
 
-def pretty_list(items):
+def pretty_list(items, delim=", ", andor="or"):
     if len(items) <= 1:
-        return ", ".join(items)
+        return delim.join(items)
     else:
-        return ", ".join(items[:-1]) + " or " + items[-1]
+        return delim.join(items[:-1]) + f" {andor} " + items[-1]
+def is_end_punctuation(char):
+    return char in [".", "!", "?"]
+
+def is_pause_punctuation(char):
+    return char in [",", "-"]
+     
