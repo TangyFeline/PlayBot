@@ -6,6 +6,7 @@ from Introduction.introduction import introduction_slash_command
 from Swearing.swearing import check_soapies
 from utils import getUserFromMention, isPlayChannel
 from Flavor.constants import *
+from Hall.hall import emoji_reacted
 from disnake.ext import tasks
 from disnake import Game
 from itertools import cycle
@@ -97,11 +98,13 @@ async def rename(inter,
           await rename_slash_command(inter, target)
      else:
           await inter.response.send_message(ERROR_NOT_PLAY_CHANNEL, ephemeral=True)
-
 @bot.event
 async def on_message(message):
      if message.author == bot.user:
           return
+     
+     if message.content.startswith('!testbump'):
+          await send_bump_message(message.author, message)
 
      if isPlayChannel(message.channel):
           await check_muzzled_victims(message)
@@ -119,6 +122,8 @@ async def on_message(message):
 async def on_reaction_add(reaction, user):
     if user.id != bot.user.id and isPlayChannel(reaction.message.channel):
         await check_for_emoji_actions(reaction.emoji, reaction.message.author, reaction.message.channel)
+        if reaction.emoji == PIN_EMOJI:
+             await emoji_reacted(reaction.message)
 
 now_playing = cycle(NOW_PLAYING)
 

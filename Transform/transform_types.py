@@ -382,7 +382,10 @@ class PetTransformation(Transformation):
     def swear_text(self):
         noises = self.button_values.get('noises', '')
         noises = noises.split('\n')
-        return choice(noises)
+        noise = choice(noises)
+        if noise[-1:] == '+':
+            noise = noise[:-1] + noise[-2] * random.randint(1,5)
+        return noise
 
     def replace_text(self, s):        
         if self.punish:

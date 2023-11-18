@@ -60,6 +60,21 @@ PLAY_CHANNELS = [
     "🔧-testing-room"
 ]
 
+WALL_OF_SHAME_CHANNEL = "wallofshame"
+WALL_OF_SHAME_CHANNEL_EXTREME = "extremewallofshame"
+PIN_THRESHOLD = 1
+PIN_EMOJI = "📌"
+PIN_MESSAGE = [
+    "Congrats, {person}, you were shameful enough to be pinned in the wall of shame!"
+]
+# Pins in these channels will be posted to an extreme wall of shame.
+EXTREME_CHANNELS = [
+    "✯-rough-room",
+    "✯-rough-room-2",
+    "✯-rough-room-3",
+    "✯-rough-room-4"
+]
+
 # =~=~=~=~=~=~=~==~ Static Messages =~=~=~=~=~=~=~=~=~ #
 # Error Messages
 ERROR_NOT_RENAMER = f"You do not have the {RENAMER_ROLE} role and cannot rename!" # Someone tried to rename without Renamer.

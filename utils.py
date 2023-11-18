@@ -50,13 +50,13 @@ async def getHook(channel):
         channel = channel.parent
 
     hooks = await channel.webhooks()
-
-    if len(hooks) == 0:
-        webhook = await channel.create_webhook(name="PlayBot Webhook")
-    else:
-        webhook = hooks[0]
-
-    print(webhook.url)
+    webhook = False
+    for hook in hooks:        
+        if hook.user == channel.guild.me:
+            webhook = hook
+            break
+    if not webhook:
+        webhook = await channel.create_webhook(name="PlayBot Webhook")            
 
     if isThread:
         webhook = ThreadWebhook(webhook.url, thread_id)

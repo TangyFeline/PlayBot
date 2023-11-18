@@ -22,5 +22,5 @@ async def send_bump_message(user, message):
         await using_flavor['default'].default_send(Pronouns(message.author, message.guild), message)
     else:
         chosen_kink_role = choice(flavor_roles_user_has)
-        flavor_class = using_flavor[chosen_kink_role]
+        flavor_class = using_flavor[chosen_kink_role.name]
         await flavor_class.send(chosen_kink_role, Pronouns(message.author, message.guild), message)
